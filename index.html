@@ -1,288 +1,786 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Web Service</title>
+    <title>給付金ナビ | 日本の奨学金・補助金適格性チェッカー</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+        :root {
+            --primary-color: #0078d7;
+            --primary-dark: #005a9e;
+            --secondary-color: #ff6b6b;
+            --bg-color: #f5f8fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+            --border-color: #e1e4e8;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --gray-light: #f0f2f5;
         }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+        
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
+        
+        .logo {
+            font-size: 1.5rem;
             font-weight: bold;
         }
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+        
+        .logo span {
+            color: var(--secondary-color);
         }
-        button {
-            background-color: #3498db;
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
             color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            color: var(--primary-color);
             border: none;
-            padding: 10px 15px;
             border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
+            transition: all 0.3s;
         }
-        button:hover {
-            background-color: #2980b9;
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        #responseArea {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            min-height: 100px;
-            background-color: #f9f9f9;
-            display: none;
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
         }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .main-content {
+            padding: 2rem 0;
+        }
+        
         .tabs {
             display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            background-color: var(--card-bg);
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            margin-bottom: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
+        
         .tab {
-            padding: 10px 20px;
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
             cursor: pointer;
-            background-color: #f1f1f1;
-            margin-right: 5px;
-            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            color: var(--text-color);
         }
+        
         .tab.active {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
         }
-        .tab-content {
+        
+        .content-section {
+            display: none;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        /* 適格性チェッカー部分のスタイル */
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .radio-group {
+            margin-top: 0.5rem;
+        }
+        
+        .radio-option {
+            margin-bottom: 0.8rem;
+        }
+        
+        .radio-option input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* 給付金検索部分のスタイル */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .stat {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filters {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .grants-list {
+            margin-top: 2rem;
+        }
+        
+        .grant-item {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .grant-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .grant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .grant-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .grant-prefecture {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .grant-desc {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .grant-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .grant-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .grant-link:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .results {
+            margin-top: 2rem;
             display: none;
         }
-        .tab-content.active {
-            display: block;
+        
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        /* アバウトセクションのスタイル */
+        .about-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .about-column {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+        
+        .about-column h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-list {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+            padding-right: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1.5rem;
+        }
+        
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* レスポンシブデザイン */
+        @media screen and (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-cards, .filter-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>My Web Service</h1>
-        
-        <div class="tabs">
-            <div class="tab active" onclick="openTab(event, 'contactForm')">Contact Form</div>
-            <div class="tab" onclick="openTab(event, 'calculator')">Calculator</div>
-            <div class="tab" onclick="openTab(event, 'todoList')">To-Do List</div>
+    <header>
+        <div class="container">
+            <div class="logo">給付金<span>ナビ</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home" onclick="scrollToTop()">ホーム</a></li>
+                    <li><a href="#main-tabs" onclick="showTab('eligibility')">適格性チェッカー</a></li>
+                    <li><a href="#main-tabs" onclick="showTab('search')">給付金検索</a></li>
+                    <li><a href="#main-tabs" onclick="showTab('about')">サービスについて</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <!-- Contact Form -->
-        <div id="contactForm" class="tab-content active">
-            <h2>Contact Us</h2>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter your name">
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>あなたに合った給付金・補助金を見つけましょう</h1>
+            <p>給付金ナビは、日本全国の自治体が提供する給付金や補助金の情報を一元化し、あなたの状況に合った支援制度を簡単に見つけられるサービスです。</p>
+            <div class="hero-buttons">
+                <a href="#main-tabs" class="btn" onclick="showTab('eligibility')">適格性をチェックする</a>
+                <a href="#main-tabs" class="btn btn-outline" onclick="showTab('search')">給付金情報を探す</a>
             </div>
-            
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" placeholder="Enter your email">
-            </div>
-            
-            <div class="form-group">
-                <label for="subject">Subject:</label>
-                <select id="subject">
-                    <option value="">Select a subject</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="support">Technical Support</option>
-                    <option value="billing">Billing Question</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Message:</label>
-                <textarea id="message" rows="5" placeholder="Enter your message"></textarea>
-            </div>
-            
-            <button onclick="submitForm()">Submit</button>
-            
-            <div id="contactResponse" class="responseArea"></div>
         </div>
-        
-        <!-- Calculator -->
-        <div id="calculator" class="tab-content">
-            <h2>Simple Calculator</h2>
-            <div class="form-group">
-                <label for="num1">First Number:</label>
-                <input type="number" id="num1" placeholder="Enter first number">
+    </section>
+    
+    <div class="main-content">
+        <div class="container" id="main-tabs">
+            <div class="tabs">
+                <div class="tab" id="tab-eligibility" onclick="showTab('eligibility')">適格性チェッカー</div>
+                <div class="tab" id="tab-search" onclick="showTab('search')">給付金検索</div>
+                <div class="tab" id="tab-about" onclick="showTab('about')">サービスについて</div>
             </div>
             
-            <div class="form-group">
-                <label for="operation">Operation:</label>
-                <select id="operation">
-                    <option value="add">Addition (+)</option>
-                    <option value="subtract">Subtraction (-)</option>
-                    <option value="multiply">Multiplication (×)</option>
-                    <option value="divide">Division (÷)</option>
-                </select>
+            <!-- 適格性チェッカーセクション -->
+            <div class="content-section" id="eligibility-section">
+                <h2 class="section-title">あなたの適格性をチェック</h2>
+                <p>以下の情報を入力して、あなたが受けられる可能性のある給付金や補助金を調べましょう。</p>
+                
+                <div class="form-section">
+                    <h3>1. 個人情報</h3>
+                    <div class="form-group">
+                        <label for="age">年齢:</label>
+                        <input type="number" id="age" min="15" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>性別:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="gender-male" name="gender" value="male">
+                                <label for="gender-male">男性</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="gender-female" name="gender" value="female">
+                                <label for="gender-female">女性</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="gender-other" name="gender" value="other">
+                                <label for="gender-other">その他</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prefecture">居住都道府県:</label>
+                        <select id="prefecture">
+                            <option value="">選択してください</option>
+                            <option value="hokkaido">北海道</option>
+                            <option value="aomori">青森県</option>
+                            <option value="iwate">岩手県</option>
+                            <option value="miyagi">宮城県</option>
+                            <option value="akita">秋田県</option>
+                            <option value="yamagata">山形県</option>
+                            <option value="fukushima">福島県</option>
+                            <option value="ibaraki">茨城県</option>
+                            <option value="tochigi">栃木県</option>
+                            <option value="gunma">群馬県</option>
+                            <option value="saitama">埼玉県</option>
+                            <option value="chiba">千葉県</option>
+                            <option value="tokyo">東京都</option>
+                            <option value="kanagawa">神奈川県</option>
+                            <option value="niigata">新潟県</option>
+                            <option value="toyama">富山県</option>
+                            <option value="ishikawa">石川県</option>
+                            <option value="fukui">福井県</option>
+                            <option value="yamanashi">山梨県</option>
+                            <option value="nagano">長野県</option>
+                            <option value="gifu">岐阜県</option>
+                            <option value="shizuoka">静岡県</option>
+                            <option value="aichi">愛知県</option>
+                            <option value="mie">三重県</option>
+                            <option value="shiga">滋賀県</option>
+                            <option value="kyoto">京都府</option>
+                            <option value="osaka">大阪府</option>
+                            <option value="hyogo">兵庫県</option>
+                            <option value="nara">奈良県</option>
+                            <option value="wakayama">和歌山県</option>
+                            <option value="tottori">鳥取県</option>
+                            <option value="shimane">島根県</option>
+                            <option value="okayama">岡山県</option>
+                            <option value="hiroshima">広島県</option>
+                            <option value="yamaguchi">山口県</option>
+                            <option value="tokushima">徳島県</option>
+                            <option value="kagawa">香川県</option>
+                            <option value="ehime">愛媛県</option>
+                            <option value="kochi">高知県</option>
+                            <option value="fukuoka">福岡県</option>
+                            <option value="saga">佐賀県</option>
+                            <option value="nagasaki">長崎県</option>
+                            <option value="kumamoto">熊本県</option>
+                            <option value="oita">大分県</option>
+                            <option value="miyazaki">宮崎県</option>
+                            <option value="kagoshima">鹿児島県</option>
+                            <option value="okinawa">沖縄県</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>2. 教育背景</h3>
+                    <div class="form-group">
+                        <label for="education-status">現在の就学状況:</label>
+                        <select id="education-status">
+                            <option value="">選択してください</option>
+                            <option value="high-school">高校生</option>
+                            <option value="university">大学生</option>
+                            <option value="graduate">大学院生</option>
+                            <option value="vocational">専門学校生</option>
+                            <option value="not-student">学生ではない</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="field-of-study">専攻分野:</label>
+                        <select id="field-of-study">
+                            <option value="">選択してください</option>
+                            <option value="humanities">人文科学</option>
+                            <option value="social-science">社会科学</option>
+                            <option value="natural-science">自然科学</option>
+                            <option value="engineering">工学</option>
+                            <option value="medicine">医学・薬学</option>
+                            <option value="education">教育</option>
+                            <option value="arts">芸術</option>
+                            <option value="agriculture">農学</option>
+                            <option value="other">その他</option>
+                            <option value="none">該当なし</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>成績（GPA等）:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="grade-excellent" name="grades" value="excellent">
+                                <label for="grade-excellent">優秀（上位10%）</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="grade-good" name="grades" value="good">
+                                <label for="grade-good">良好（上位30%）</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="grade-average" name="grades" value="average">
+                                <label for="grade-average">平均的</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="grade-na" name="grades" value="na">
+                                <label for="grade-na">該当なし/不明</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>3. 家計状況</h3>
+                    <div class="form-group">
+                        <label for="household-income">世帯年収:</label>
+                        <select id="household-income">
+                            <option value="">選択してください</option>
+                            <option value="under-2m">200万円未満</option>
+                            <option value="2m-4m">200万円～400万円未満</option>
+                            <option value="4m-6m">400万円～600万円未満</option>
+                            <option value="6m-8m">600万円～800万円未満</option>
+                            <option value="8m-10m">800万円～1000万円未満</option>
+                            <option value="over-10m">1000万円以上</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="household-size">世帯人数:</label>
+                        <input type="number" id="household-size" min="1" max="10" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>特別な状況:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="checkbox" id="special-single-parent" name="special" value="single-parent">
+                                <label for="special-single-parent">ひとり親家庭</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="checkbox" id="special-disability" name="special" value="disability">
+                                <label for="special-disability">障害がある</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="checkbox" id="special-disaster" name="special" value="disaster">
+                                <label for="special-disaster">災害被災者</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="findGrants()">適格性をチェックする</button>
+                
+                <div class="results" id="eligibility-results">
+                    <h2>あなたが受けられる可能性のある給付金・補助金</h2>
+                    <div class="info-box">
+                        <p>以下の結果はあくまで参考情報です。正確な適格性については各制度の公式ウェブサイトでご確認ください。</p>
+                    </div>
+                    <div id="grants-list">
+                        <!-- 結果がここに表示されます -->
+                    </div>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="num2">Second Number:</label>
-                <input type="number" id="num2" placeholder="Enter second number">
-            </div>
-            
-            <button onclick="calculate()">Calculate</button>
-            
-            <div id="calcResult" class="responseArea"></div>
-        </div>
-        
-        <!-- To-Do List -->
-        <div id="todoList" class="tab-content">
-            <h2>To-Do List</h2>
-            <div class="form-group">
-                <label for="taskInput">New Task:</label>
-                <input type="text" id="taskInput" placeholder="Enter a new task">
-                <button onclick="addTask()" style="margin-top: 10px; width: 100%;">Add Task</button>
-            </div>
-            
-            <h3>Your Tasks:</h3>
-            <ul id="tasks"></ul>
-        </div>
-    </div>
-
-    <script>
-        // Tab functionality
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].className = tabcontent[i].className.replace(" active", "");
-            }
-            
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            
-            document.getElementById(tabName).className += " active";
-            evt.currentTarget.className += " active";
-        }
-        
-        // Contact form functionality
-        function submitForm() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            if (!name || !email || !subject || !message) {
-                alert("Please fill in all fields");
-                return;
-            }
-            
-            const response = document.getElementById('contactResponse');
-            response.style.display = 'block';
-            response.innerHTML = `<p>Thank you, ${name}!</p><p>Your message has been received. We'll contact you at ${email} soon.</p>`;
-            
-            // Reset form
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('subject').value = '';
-            document.getElementById('message').value = '';
-        }
-        
-        // Calculator functionality
-        function calculate() {
-            const num1 = parseFloat(document.getElementById('num1').value);
-            const num2 = parseFloat(document.getElementById('num2').value);
-            const operation = document.getElementById('operation').value;
-            
-            if (isNaN(num1) || isNaN(num2)) {
-                alert("Please enter valid numbers");
-                return;
-            }
-            
-            let result;
-            switch(operation) {
-                case 'add':
-                    result = num1 + num2;
-                    break;
-                case 'subtract':
-                    result = num1 - num2;
-                    break;
-                case 'multiply':
-                    result = num1 * num2;
-                    break;
-                case 'divide':
-                    if (num2 === 0) {
-                        alert("Cannot divide by zero");
-                        return;
-                    }
-                    result = num1 / num2;
-                    break;
-            }
-            
-            const calcResult = document.getElementById('calcResult');
-            calcResult.style.display = 'block';
-            calcResult.innerHTML = `<p>Result: ${result}</p>`;
-        }
-        
-        // To-Do List functionality
-        function addTask() {
-            const taskInput = document.getElementById('taskInput');
-            const task = taskInput.value.trim();
-            
-            if (!task) {
-                alert("Please enter a task");
-                return;
-            }
-            
-            const tasksList = document.getElementById('tasks');
-            const li = document.createElement('li');
-            li.innerHTML = `
-                ${task} 
-                <button onclick="this.parentElement.remove()" style="margin-left: 10px; background-color: #e74c3c;">Delete</button>
-                <button onclick="markAsDone(this)" style="margin-left: 5px; background-color: #2ecc71;">Done</button>
-            `;
-            
-            tasksList.appendChild(li);
-            taskInput.value = '';
-        }
-        
-        function markAsDone(button) {
-            const listItem = button.parentElement;
-            listItem.style.textDecoration = "line-through";
-            listItem.style.color = "#7f8c8d";
-            button.disabled = true;
-            button.style.backgroundColor = "#95a5a6";
-        }
-        
-        // Initialize local storage for todos (for persistence)
-        document.addEventListener('DOMContentLoaded', function() {
-            // This could be expanded to save todos to localStorage
-            // but keeping it simple for now
-        });
-    </script>
-</body>
-</html>
+            <!-- 給付金検索セクション -->
+            <div class="content-section" id="search-section">
+                <h2 class="section-title">給付金・補助金検索</h2>
+                
+                <div class="dashboard-cards">
+                    <div class="card fade-in" style="animation-delay: 0.1s;">
+                        <div class="card-title">収集した給付金情報</div>
+                        <div class="stat">1,283</div>
+                        <div>全国の自治体から収集</div>
+                    </div>
+                    <div class="card fade-in" style="animation-delay: 0.2s;">
+                        <div class="card-title">対象都道府県</div>
+                        <div class="stat">47</div>
+                        <div>すべての都道府県</div>
+                    </div>
+                    <div class="card fade-in" style="animation-delay: 0.3s;">
+                        <div class="card-title">最終更新日</div>
+                        <div class="stat">2025/3/9</div>
+                        <div>データ更新頻度: 毎週</div>
+                    </div>
+                </div>
+                
+                <div class="filters">
+                    <h3>給付金を検索</h3>
+                    <div class="filter-controls">
+                        <div class="form-group">
+                            <label for="search-prefecture">都道府県</label>
+                            <select id="search-prefecture" class="filter-input">
+                                <option value="">すべて</option>
+                                <option value="hokkaido">北海道</option>
+                                <option value="aomori">青森県</option>
+                                <!-- 他の都道府県... -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="search-category">カテゴリ</label>
+                            <select id="search-category" class="filter-input">
+                                <option value="">すべて</option>
+                                <option value="education">教育・奨学金</option>
+                                <option value="childcare">子育て支援</option>
+                                <option value="housing">住宅支援</option>
+                                <option value="medical">医療費助成</option>
+                                <option value="employment">就労支
