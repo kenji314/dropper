@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>給付金ナビ | 日本の奨学金・補助金適格性チェッカー</title>
+    <title>東京都子育て給付金マッチング | 給付金ナビ</title>
     <style>
         :root {
             --primary-color: #0078d7;
@@ -86,7 +86,6 @@
             color: white;
             padding: 4rem 0;
             text-align: center;
-            margin-bottom: 2rem;
         }
         
         .hero h1 {
@@ -102,98 +101,30 @@
             margin-right: auto;
         }
         
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background-color: white;
-            color: var(--primary-color);
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-        
-        .btn-outline:hover {
-            background-color: white;
-            color: var(--primary-color);
-        }
-        
         .main-content {
             padding: 2rem 0;
         }
         
-        .tabs {
-            display: flex;
-            background-color: var(--card-bg);
-            border-radius: 8px 8px 0 0;
-            overflow: hidden;
-            margin-bottom: 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            color: var(--text-color);
-        }
-        
-        .tab.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .content-section {
-            display: none;
-            padding: 2rem;
-            background-color: var(--card-bg);
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-        }
-        
-        .content-section.active {
-            display: block;
-        }
-        
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
         }
         
-        /* 適格性チェッカー部分のスタイル */
-        .form-section {
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
             margin-bottom: 2rem;
-        }
-        
-        .form-section h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-dark);
         }
         
         .form-group {
@@ -214,15 +145,15 @@
             font-size: 1rem;
         }
         
-        .radio-group {
+        .checkbox-group {
             margin-top: 0.5rem;
         }
         
-        .radio-option {
+        .checkbox-option {
             margin-bottom: 0.8rem;
         }
         
-        .radio-option input {
+        .checkbox-option input {
             width: auto;
             margin-right: 0.5rem;
         }
@@ -243,56 +174,15 @@
             background-color: var(--primary-dark);
         }
         
-        /* 給付金検索部分のスタイル */
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .stat {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        
-        .filters {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        .filter-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        
-        .grants-list {
+        .results-container {
             margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-count {
+            margin-bottom: 1rem;
+            font-weight: bold;
+            color: var(--primary-color);
         }
         
         .grant-item {
@@ -317,34 +207,42 @@
         }
         
         .grant-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
         
-        .grant-prefecture {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 4px;
-            font-size: 0.8rem;
+        .grant-location {
             font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
         }
         
         .grant-desc {
             margin-bottom: 1rem;
-            color: var(--text-color);
+        }
+        
+        .grant-details {
+            background-color: var(--gray-light);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .grant-detail-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .grant-detail-item strong {
+            margin-right: 0.5rem;
         }
         
         .grant-meta {
+            margin-top: 1rem;
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .grant-link {
@@ -362,47 +260,10 @@
             background-color: var(--primary-dark);
         }
         
-        .results {
-            margin-top: 2rem;
-            display: none;
-        }
-        
-        .info-box {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--primary-color);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-        
-        /* アバウトセクションのスタイル */
-        .about-columns {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .about-column {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-        }
-        
-        .about-column h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .feature-list {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .feature-list li {
-            margin-bottom: 0.5rem;
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
         }
         
         footer {
@@ -458,16 +319,6 @@
             margin-top: 1.5rem;
         }
         
-        /* アニメーション */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
         /* レスポンシブデザイン */
         @media screen and (max-width: 768px) {
             header .container {
@@ -487,30 +338,15 @@
             }
             
             .hero {
-                padding: 2rem 0;
+                padding: 2rem 1rem;
             }
             
             .hero h1 {
                 font-size: 2rem;
             }
             
-            .dashboard-cards, .filter-controls {
-                grid-template-columns: 1fr;
-            }
-            
-            .content-section {
+            .card {
                 padding: 1.5rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 0.5rem;
-                text-align: center;
             }
         }
     </style>
@@ -521,266 +357,463 @@
             <div class="logo">給付金<span>ナビ</span></div>
             <nav>
                 <ul>
-                    <li><a href="#home" onclick="scrollToTop()">ホーム</a></li>
-                    <li><a href="#main-tabs" onclick="showTab('eligibility')">適格性チェッカー</a></li>
-                    <li><a href="#main-tabs" onclick="showTab('search')">給付金検索</a></li>
-                    <li><a href="#main-tabs" onclick="showTab('about')">サービスについて</a></li>
+                    <li><a href="#top">ホーム</a></li>
+                    <li><a href="#finder">給付金検索</a></li>
+                    <li><a href="#about">サービスについて</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     
-    <section class="hero" id="home">
+    <section class="hero" id="top">
         <div class="container">
-            <h1>あなたに合った給付金・補助金を見つけましょう</h1>
-            <p>給付金ナビは、日本全国の自治体が提供する給付金や補助金の情報を一元化し、あなたの状況に合った支援制度を簡単に見つけられるサービスです。</p>
-            <div class="hero-buttons">
-                <a href="#main-tabs" class="btn" onclick="showTab('eligibility')">適格性をチェックする</a>
-                <a href="#main-tabs" class="btn btn-outline" onclick="showTab('search')">給付金情報を探す</a>
-            </div>
+            <h1>東京都の子育て給付金を探そう</h1>
+            <p>あなたの状況に合った給付金・補助金を簡単に見つけることができます。家族構成や収入などの情報を入力して、受け取れる可能性のある支援制度をチェックしましょう。</p>
         </div>
     </section>
     
     <div class="main-content">
-        <div class="container" id="main-tabs">
-            <div class="tabs">
-                <div class="tab" id="tab-eligibility" onclick="showTab('eligibility')">適格性チェッカー</div>
-                <div class="tab" id="tab-search" onclick="showTab('search')">給付金検索</div>
-                <div class="tab" id="tab-about" onclick="showTab('about')">サービスについて</div>
-            </div>
+        <div class="container">
+            <section id="finder" class="card">
+                <h2 class="section-title">あなたの情報を入力</h2>
+                <div class="info-box">
+                    <p>入力いただいた情報は給付金の適格性判断にのみ使用され、サーバーには保存されません。</p>
+                </div>
+                
+                <form id="grant-finder-form">
+                    <!-- 基本情報 -->
+                    <div class="form-group">
+                        <label for="city">お住まいの地域:</label>
+                        <select id="city" required>
+                            <option value="">選択してください</option>
+                            <option value="全域">東京都全域</option>
+                            <option value="千代田区">千代田区</option>
+                            <option value="中央区">中央区</option>
+                            <option value="港区">港区</option>
+                            <option value="新宿区">新宿区</option>
+                            <option value="文京区">文京区</option>
+                            <option value="台東区">台東区</option>
+                            <option value="墨田区">墨田区</option>
+                            <option value="江東区">江東区</option>
+                            <option value="品川区">品川区</option>
+                            <option value="目黒区">目黒区</option>
+                            <option value="大田区">大田区</option>
+                            <option value="世田谷区">世田谷区</option>
+                            <option value="渋谷区">渋谷区</option>
+                            <option value="中野区">中野区</option>
+                            <option value="杉並区">杉並区</option>
+                            <option value="豊島区">豊島区</option>
+                            <option value="北区">北区</option>
+                            <option value="荒川区">荒川区</option>
+                            <option value="板橋区">板橋区</option>
+                            <option value="練馬区">練馬区</option>
+                            <option value="足立区">足立区</option>
+                            <option value="葛飾区">葛飾区</option>
+                            <option value="江戸川区">江戸川区</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 家族構成 -->
+                    <div class="form-group">
+                        <label for="child-age">お子さんの年齢:</label>
+                        <input type="number" id="child-age" min="0" max="25" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="household-income">世帯年収（万円）:</label>
+                        <select id="household-income" required>
+                            <option value="">選択してください</option>
+                            <option value="200">200万円未満</option>
+                            <option value="400">200万円～400万円未満</option>
+                            <option value="600">400万円～600万円未満</option>
+                            <option value="800">600万円～800万円未満</option>
+                            <option value="1000">800万円～1000万円未満</option>
+                            <option value="1200">1000万円以上</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 特別条件 -->
+                    <div class="form-group">
+                        <label>特別な条件:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="is-single-parent">
+                                <label for="is-single-parent">ひとり親家庭である</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="has-disability">
+                                <label for="has-disability">お子さんに障害がある</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="needs-childcare">
+                                <label for="needs-childcare">保育・教育費の支援を探している</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit">給付金を検索</button>
+                </form>
+            </section>
             
-            <!-- 適格性チェッカーセクション -->
-            <div class="content-section" id="eligibility-section">
-                <h2 class="section-title">あなたの適格性をチェック</h2>
-                <p>以下の情報を入力して、あなたが受けられる可能性のある給付金や補助金を調べましょう。</p>
+            <section id="results" class="results-container">
+                <h2 class="section-title">検索結果</h2>
+                <p class="result-count" id="result-count"></p>
                 
-                <div class="form-section">
-                    <h3>1. 個人情報</h3>
-                    <div class="form-group">
-                        <label for="age">年齢:</label>
-                        <input type="number" id="age" min="15" max="100">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>性別:</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="gender-male" name="gender" value="male">
-                                <label for="gender-male">男性</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="gender-female" name="gender" value="female">
-                                <label for="gender-female">女性</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="gender-other" name="gender" value="other">
-                                <label for="gender-other">その他</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="prefecture">居住都道府県:</label>
-                        <select id="prefecture">
-                            <option value="">選択してください</option>
-                            <option value="hokkaido">北海道</option>
-                            <option value="aomori">青森県</option>
-                            <option value="iwate">岩手県</option>
-                            <option value="miyagi">宮城県</option>
-                            <option value="akita">秋田県</option>
-                            <option value="yamagata">山形県</option>
-                            <option value="fukushima">福島県</option>
-                            <option value="ibaraki">茨城県</option>
-                            <option value="tochigi">栃木県</option>
-                            <option value="gunma">群馬県</option>
-                            <option value="saitama">埼玉県</option>
-                            <option value="chiba">千葉県</option>
-                            <option value="tokyo">東京都</option>
-                            <option value="kanagawa">神奈川県</option>
-                            <option value="niigata">新潟県</option>
-                            <option value="toyama">富山県</option>
-                            <option value="ishikawa">石川県</option>
-                            <option value="fukui">福井県</option>
-                            <option value="yamanashi">山梨県</option>
-                            <option value="nagano">長野県</option>
-                            <option value="gifu">岐阜県</option>
-                            <option value="shizuoka">静岡県</option>
-                            <option value="aichi">愛知県</option>
-                            <option value="mie">三重県</option>
-                            <option value="shiga">滋賀県</option>
-                            <option value="kyoto">京都府</option>
-                            <option value="osaka">大阪府</option>
-                            <option value="hyogo">兵庫県</option>
-                            <option value="nara">奈良県</option>
-                            <option value="wakayama">和歌山県</option>
-                            <option value="tottori">鳥取県</option>
-                            <option value="shimane">島根県</option>
-                            <option value="okayama">岡山県</option>
-                            <option value="hiroshima">広島県</option>
-                            <option value="yamaguchi">山口県</option>
-                            <option value="tokushima">徳島県</option>
-                            <option value="kagawa">香川県</option>
-                            <option value="ehime">愛媛県</option>
-                            <option value="kochi">高知県</option>
-                            <option value="fukuoka">福岡県</option>
-                            <option value="saga">佐賀県</option>
-                            <option value="nagasaki">長崎県</option>
-                            <option value="kumamoto">熊本県</option>
-                            <option value="oita">大分県</option>
-                            <option value="miyazaki">宮崎県</option>
-                            <option value="kagoshima">鹿児島県</option>
-                            <option value="okinawa">沖縄県</option>
-                        </select>
-                    </div>
+                <div id="grants-list"></div>
+            </section>
+            
+            <section id="about" class="card">
+                <h2 class="section-title">このサービスについて</h2>
+                <p>「給付金ナビ」は、東京都に住む子育て世帯が利用できる給付金や補助金の情報を簡単に見つけられるサービスです。</p>
+                <p>現在は東京都の子育て関連給付金に特化していますが、今後対象地域や給付金の種類を拡大していく予定です。</p>
+                <p>掲載情報は定期的に更新していますが、最新かつ正確な情報は各自治体の公式サイトでご確認ください。</p>
+            </section>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>給付金ナビ</h3>
+                    <p>あなたに合った給付金を簡単に見つけるサービス</p>
                 </div>
-                
-                <div class="form-section">
-                    <h3>2. 教育背景</h3>
-                    <div class="form-group">
-                        <label for="education-status">現在の就学状況:</label>
-                        <select id="education-status">
-                            <option value="">選択してください</option>
-                            <option value="high-school">高校生</option>
-                            <option value="university">大学生</option>
-                            <option value="graduate">大学院生</option>
-                            <option value="vocational">専門学校生</option>
-                            <option value="not-student">学生ではない</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="field-of-study">専攻分野:</label>
-                        <select id="field-of-study">
-                            <option value="">選択してください</option>
-                            <option value="humanities">人文科学</option>
-                            <option value="social-science">社会科学</option>
-                            <option value="natural-science">自然科学</option>
-                            <option value="engineering">工学</option>
-                            <option value="medicine">医学・薬学</option>
-                            <option value="education">教育</option>
-                            <option value="arts">芸術</option>
-                            <option value="agriculture">農学</option>
-                            <option value="other">その他</option>
-                            <option value="none">該当なし</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>成績（GPA等）:</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="grade-excellent" name="grades" value="excellent">
-                                <label for="grade-excellent">優秀（上位10%）</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="grade-good" name="grades" value="good">
-                                <label for="grade-good">良好（上位30%）</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="grade-average" name="grades" value="average">
-                                <label for="grade-average">平均的</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="grade-na" name="grades" value="na">
-                                <label for="grade-na">該当なし/不明</label>
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-section">
+                    <h3>リンク</h3>
+                    <ul class="footer-links">
+                        <li><a href="#top">ホーム</a></li>
+                        <li><a href="#finder">給付金検索</a></li>
+                        <li><a href="#about">サービスについて</a></li>
+                    </ul>
                 </div>
-                
-                <div class="form-section">
-                    <h3>3. 家計状況</h3>
-                    <div class="form-group">
-                        <label for="household-income">世帯年収:</label>
-                        <select id="household-income">
-                            <option value="">選択してください</option>
-                            <option value="under-2m">200万円未満</option>
-                            <option value="2m-4m">200万円～400万円未満</option>
-                            <option value="4m-6m">400万円～600万円未満</option>
-                            <option value="6m-8m">600万円～800万円未満</option>
-                            <option value="8m-10m">800万円～1000万円未満</option>
-                            <option value="over-10m">1000万円以上</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="household-size">世帯人数:</label>
-                        <input type="number" id="household-size" min="1" max="10" value="1">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>特別な状況:</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="checkbox" id="special-single-parent" name="special" value="single-parent">
-                                <label for="special-single-parent">ひとり親家庭</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="checkbox" id="special-disability" name="special" value="disability">
-                                <label for="special-disability">障害がある</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="checkbox" id="special-disaster" name="special" value="disaster">
-                                <label for="special-disaster">災害被災者</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button onclick="findGrants()">適格性をチェックする</button>
-                
-                <div class="results" id="eligibility-results">
-                    <h2>あなたが受けられる可能性のある給付金・補助金</h2>
-                    <div class="info-box">
-                        <p>以下の結果はあくまで参考情報です。正確な適格性については各制度の公式ウェブサイトでご確認ください。</p>
-                    </div>
-                    <div id="grants-list">
-                        <!-- 結果がここに表示されます -->
-                    </div>
+                <div class="footer-section">
+                    <h3>お問い合わせ</h3>
+                    <p>ご質問やご意見がございましたら、お気軽にお問い合わせください。</p>
+                    <p>Email: info@kyufu-navi.example.com</p>
                 </div>
             </div>
+            <div class="copyright">
+                <p>&copy; 2025 給付金ナビ All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 東京都子育て給付金データベース
+        const grantsDatabase = [
+            {
+                id: 1,
+                title: "子育て世帯臨時特別給付金",
+                description: "18歳未満の子どもがいる世帯に対する給付金です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 0,
+                target_age_max: 18,
+                household_income_max: 960,
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "2025年4月1日～5月31日",
+                amount: "子ども1人あたり5万円",
+                application_method: "オンライン/郵送",
+                required_documents: "住民票,課税証明書",
+                website: "https://www.tokyo.example.gov.jp/kosodate/kyufu",
+                contact: "03-XXXX-XXXX",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 2,
+                title: "ひとり親家庭等医療費助成",
+                description: "ひとり親家庭の子どもとその親に対する医療費の助成制度です。",
+                prefecture: "東京都",
+                city: "新宿区",
+                target_age_min: 0,
+                target_age_max: 18,
+                household_income_max: 400,
+                dependents_required: 1,
+                single_parent_only: true,
+                disability_required: false,
+                application_period: "通年",
+                amount: "医療費の自己負担分",
+                application_method: "窓口",
+                required_documents: "健康保険証,戸籍謄本",
+                website: "https://www.shinjuku.example.jp/hitorioya",
+                contact: "03-YYYY-YYYY",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 3,
+                title: "特別児童扶養手当",
+                description: "障害のある児童を養育している世帯への手当です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 0,
+                target_age_max: 20,
+                household_income_max: 9999, // 無制限の代わりに大きな数値
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: true,
+                application_period: "通年",
+                amount: "障害の程度により月額5万円～6万円",
+                application_method: "窓口/郵送",
+                required_documents: "障害者手帳,所得証明書",
+                website: "https://www.tokyo.example.jp/shougai/teate",
+                contact: "03-ZZZZ-ZZZZ",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 4,
+                title: "児童育成手当",
+                description: "ひとり親家庭などの子どもの福祉の増進を図るための手当です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 0,
+                target_age_max: 18,
+                household_income_max: 360,
+                dependents_required: 1,
+                single_parent_only: true,
+                disability_required: false,
+                application_period: "通年",
+                amount: "月額13,500円",
+                application_method: "窓口",
+                required_documents: "戸籍謄本,住民票",
+                website: "https://www.tokyo.example.jp/kosodate/ikusei",
+                contact: "03-AAAA-AAAA",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 5,
+                title: "乳幼児医療費助成",
+                description: "小学校就学前の乳幼児の医療費を助成する制度です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 0,
+                target_age_max: 6,
+                household_income_max: 9999, // 所得制限なしの場合
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "通年",
+                amount: "医療費の自己負担分",
+                application_method: "窓口",
+                required_documents: "健康保険証,住民票",
+                website: "https://www.tokyo.example.jp/kosodate/iryohi",
+                contact: "03-BBBB-BBBB",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 6,
+                title: "義務教育就学援助",
+                description: "経済的理由により就学困難な児童・生徒の保護者に対する援助です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 6,
+                target_age_max: 15,
+                household_income_max: 400,
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "各自治体により異なる",
+                amount: "学用品費、給食費、修学旅行費など",
+                application_method: "学校/窓口",
+                required_documents: "所得証明書,住民票",
+                website: "https://www.tokyo.example.jp/kyoiku/enjo",
+                contact: "03-CCCC-CCCC",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 7,
+                title: "保育料の減免制度",
+                description: "一定の条件を満たす世帯の保育料を減免する制度です。",
+                prefecture: "東京都",
+                city: "全域",
+                target_age_min: 0,
+                target_age_max: 5,
+                household_income_max: 600,
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "通年",
+                amount: "世帯状況により異なる",
+                application_method: "窓口",
+                required_documents: "所得証明書,住民票",
+                website: "https://www.tokyo.example.jp/kosodate/hoiku",
+                contact: "03-DDDD-DDDD",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 8,
+                title: "世田谷区子育て応援券",
+                description: "0歳から3歳未満の子どもがいる世帯に配布される子育て支援サービスに使えるクーポンです。",
+                prefecture: "東京都",
+                city: "世田谷区",
+                target_age_min: 0,
+                target_age_max: 3,
+                household_income_max: 9999, // 所得制限なし
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "通年",
+                amount: "子ども1人あたり20,000円分",
+                application_method: "窓口/オンライン",
+                required_documents: "住民票",
+                website: "https://www.setagaya.example.jp/kosodate/coupon",
+                contact: "03-EEEE-EEEE",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 9,
+                title: "新宿区子ども医療費助成",
+                description: "中学校3年生までの子どもの医療費を助成する制度です。",
+                prefecture: "東京都",
+                city: "新宿区",
+                target_age_min: 0,
+                target_age_max: 15,
+                household_income_max: 9999, // 所得制限なし
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: false,
+                application_period: "通年",
+                amount: "医療費の自己負担分",
+                application_method: "窓口",
+                required_documents: "健康保険証,住民票",
+                website: "https://www.shinjuku.example.jp/kosodate/iryohi",
+                contact: "03-FFFF-FFFF",
+                last_updated: "2025-03-09"
+            },
+            {
+                id: 10,
+                title: "練馬区障害児通所支援利用者負担軽減",
+                description: "障害児通所支援サービスの利用者負担を軽減する制度です。",
+                prefecture: "東京都",
+                city: "練馬区",
+                target_age_min: 0,
+                target_age_max: 18,
+                household_income_max: 600,
+                dependents_required: 1,
+                single_parent_only: false,
+                disability_required: true,
+                application_period: "通年",
+                amount: "世帯状況により異なる",
+                application_method: "窓口",
+                required_documents: "障害者手帳,所得証明書",
+                website: "https://www.nerima.example.jp/shougai/tsusho",
+                contact: "03-GGGG-GGGG",
+                last_updated: "2025-03-09"
+            }
+        ];
+        
+        // フォーム送信イベントリスナー
+        document.getElementById('grant-finder-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            findEligibleGrants();
+        });
+        
+        // 条件に合う給付金を検索する関数
+        function findEligibleGrants() {
+            // フォームから値を取得
+            const cityValue = document.getElementById('city').value;
+            const childAge = parseInt(document.getElementById('child-age').value);
+            const householdIncome = parseInt(document.getElementById('household-income').value);
+            const isSingleParent = document.getElementById('is-single-parent').checked;
+            const hasDisability = document.getElementById('has-disability').checked;
+            const needsChildcare = document.getElementById('needs-childcare').checked;
             
-            <!-- 給付金検索セクション -->
-            <div class="content-section" id="search-section">
-                <h2 class="section-title">給付金・補助金検索</h2>
+            // 条件に合う給付金をフィルタリング
+            const eligibleGrants = grantsDatabase.filter(grant => {
+                // 地域条件（市区町村が「全域」または選択した市区町村と一致）
+                if (grant.city !== "全域" && grant.city !== cityValue) return false;
                 
-                <div class="dashboard-cards">
-                    <div class="card fade-in" style="animation-delay: 0.1s;">
-                        <div class="card-title">収集した給付金情報</div>
-                        <div class="stat">1,283</div>
-                        <div>全国の自治体から収集</div>
-                    </div>
-                    <div class="card fade-in" style="animation-delay: 0.2s;">
-                        <div class="card-title">対象都道府県</div>
-                        <div class="stat">47</div>
-                        <div>すべての都道府県</div>
-                    </div>
-                    <div class="card fade-in" style="animation-delay: 0.3s;">
-                        <div class="card-title">最終更新日</div>
-                        <div class="stat">2025/3/9</div>
-                        <div>データ更新頻度: 毎週</div>
-                    </div>
-                </div>
+                // 子どもの年齢条件
+                if (childAge < grant.target_age_min || childAge > grant.target_age_max) return false;
                 
-                <div class="filters">
-                    <h3>給付金を検索</h3>
-                    <div class="filter-controls">
-                        <div class="form-group">
-                            <label for="search-prefecture">都道府県</label>
-                            <select id="search-prefecture" class="filter-input">
-                                <option value="">すべて</option>
-                                <option value="hokkaido">北海道</option>
-                                <option value="aomori">青森県</option>
-                                <!-- 他の都道府県... -->
-                            </select>
+                // 世帯年収条件
+                if (householdIncome > grant.household_income_max) return false;
+                
+                // ひとり親条件
+                if (grant.single_parent_only && !isSingleParent) return false;
+                
+                // 障害条件
+                if (grant.disability_required && !hasDisability) return false;
+                
+                return true;
+            });
+            
+            // 結果を表示
+            displayResults(eligibleGrants);
+        }
+        
+        // 検索結果を表示する関数
+        function displayResults(grants) {
+            const resultsContainer = document.getElementById('results');
+            const grantsList = document.getElementById('grants-list');
+            const resultCount = document.getElementById('result-count');
+            
+            // 結果コンテナを表示
+            resultsContainer.style.display = 'block';
+            
+            // 結果件数を表示
+            resultCount.textContent = `${grants.length}件の給付金が見つかりました`;
+            
+            // 結果リストをクリア
+            grantsList.innerHTML = '';
+            
+            // 結果がない場合
+            if (grants.length === 0) {
+                grantsList.innerHTML = '<div class="no-results"><p>条件に合う給付金が見つかりませんでした。条件を変えて再度検索してください。</p></div>';
+                return;
+            }
+            
+            // 給付金情報を表示
+            grants.forEach(grant => {
+                const grantElement = document.createElement('div');
+                grantElement.className = 'grant-item';
+                
+                grantElement.innerHTML = `
+                    <div class="grant-header">
+                        <h3 class="grant-title">${grant.title}</h3>
+                    </div>
+                    <p class="grant-location">${grant.city === '全域' ? '東京都全域' : grant.prefecture + ' ' + grant.city}</p>
+                    <p class="grant-desc">${grant.description}</p>
+                    
+                    <div class="grant-details">
+                        <div class="grant-detail-item">
+                            <strong>対象年齢:</strong> ${grant.target_age_min}歳～${grant.target_age_max}歳
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="search-category">カテゴリ</label>
-                            <select id="search-category" class="filter-input">
-                                <option value="">すべて</option>
-                                <option value="education">教育・奨学金</option>
-                                <option value="childcare">子育て支援</option>
-                                <option value="housing">住宅支援</option>
-                                <option value="medical">医療費助成</option>
-                                <option value="employment">就労支
+                        <div class="grant-detail-item">
+                            <strong>世帯年収条件:</strong> ${grant.household_income_max >= 9999 ? '所得制限なし' : grant.household_income_max + '万円以下'}
+                        </div>
+                        <div class="grant-detail-item">
+                            <strong>金額:</strong> ${grant.amount}
+                        </div>
+                        <div class="grant-detail-item">
+                            <strong>申請期間:</strong> ${grant.application_period}
+                        </div>
+                        <div class="grant-detail-item">
+                            <strong>申請方法:</strong> ${grant.application_method}
+                        </div>
+                        <div class="grant-detail-item">
+                            <strong>必要書類:</strong> ${grant.required_documents.split(',').join(', ')}
+                        </div>
+                    </div>
+                    
+                    <div class="grant-meta">
+                        <span>問い合わせ: ${grant.contact}</span>
+                        <a href="${grant.website}" target="_blank" class="grant-link">詳細を見る</a>
+                    </div>
+                `;
+                
+                grantsList.appendChild(grantElement);
+            });
+            
+            // 結果セクションまでスクロール
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // ページ読み込み時の初期処理
+        document.addEventListener('DOMContentLoaded', function() {
+            // フォームの初期値を設定
+            document.getElementById('city').value = "全域";
+            document.getElementById('child-age').value = "5";
+            document.getElementById('household-income').value = "600";
+        });
