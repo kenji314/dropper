@@ -709,6 +709,12 @@
             findEligibleGrants();
         });
         
+        // 検索ボタンにもクリックイベントを追加（フォーム送信と同じ挙動に）
+        document.querySelector('#grant-finder-form button[type="submit"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            findEligibleGrants();
+        });
+        
         // 条件に合う給付金を検索する関数
         function findEligibleGrants() {
             // フォームから値を取得
@@ -816,4 +822,52 @@
             document.getElementById('city').value = "全域";
             document.getElementById('child-age').value = "5";
             document.getElementById('household-income').value = "600";
+            
+            // フォームのボタンをクリックしたときの処理を確実に設定
+            document.querySelector('#grant-finder-form button').onclick = function(e) {
+                e.preventDefault();
+                console.log('検索ボタンがクリックされました');
+                findEligibleGrants();
+                return false;
+            };
         });
+        
+        // デバッグ用のログを追加
+        function findEligibleGrants() {
+            console.log('findEligibleGrants関数が呼び出されました');
+            
+            // フォームから値を取得
+            const cityValue = document.getElementById('city').value;
+            const childAge = parseInt(document.getElementById('child-age').value);
+            const householdIncome = parseInt(document.getElementById('household-income').value);
+            const isSingleParent = document.getElementById('is-single-parent').checked;
+            const hasDisability = document.getElementById('has-disability').checked;
+            const needsChildcare = document.getElementById('needs-childcare').checked;
+            
+            console.log('入力値:', { cityValue, childAge, householdIncome, isSingleParent, hasDisability, needsChildcare });
+            
+            // 条件に合う給付金をフィルタリング
+            const eligibleGrants = grantsDatabase.filter(grant => {
+                // 地域条件（市区町村が「全域」または選択した市区町村と一致）
+                if (grant.city !== "全域" && grant.city !== cityValue) return false;
+                
+                // 子どもの年齢条件
+                if (childAge < grant.target_age_min || childAge > grant.target_age_max) return false;
+                
+                // 世帯年収条件
+                if (householdIncome > grant.household_income_max) return false;
+                
+                // ひとり親条件
+                if (grant.single_parent_only && !isSingleParent) return false;
+                
+                // 障害条件
+                if (grant.disability_required && !hasDisability) return false;
+                
+                return true;
+            });
+            
+            console.log('検索結果:', eligibleGrants.length + '件見つかりました');
+            
+            // 結果を表示
+            displayResults(eligibleGrants);
+        }
