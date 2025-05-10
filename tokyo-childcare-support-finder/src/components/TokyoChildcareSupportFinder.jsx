@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Globe, Home, ChevronDown, Info, Check, Users, Baby, School, MedicalCross, Gift, BookOpen } from 'lucide-react';
+import { Search, Globe, Home, ChevronDown, Info, Check, Users, Baby, School, FirstAid, Gift, BookOpen } from 'lucide-react';
 import { languages, translations } from '../data/translations';
 import { municipalities } from '../data/municipalities';
 import { supportPrograms } from '../data/supportPrograms';
@@ -9,7 +9,7 @@ import '../styles/App.css';
 const categoryIcons = {
   pregnancy: <Baby size={20} />,
   childcare: <Users size={20} />,
-  medical: <MedicalCross size={20} />,
+  medical: <FirstAid size={20} />,
   education: <School size={20} />,
   disability: <Info size={20} />,
   afterSchool: <BookOpen size={20} />
@@ -312,7 +312,7 @@ const TokyoChildcareSupportFinder = () => {
                       className="mr-2"
                     />
                     <span className="flex items-center">
-                      <MedicalCross size={16} className="mr-1" />
+                      <FirstAid size={16} className="mr-1" />
                       {getText('medical')}
                     </span>
                   </label>
@@ -537,7 +537,7 @@ const TokyoChildcareSupportFinder = () => {
                       )}
                       {program.needsHealthInsurance && (
                         <span className="inline-flex items-center px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded-full">
-                          <MedicalCross size={12} className="mr-1" />
+                          <FirstAid size={12} className="mr-1" />
                           {getText('supports.needsInsurance')}
                         </span>
                       )}
