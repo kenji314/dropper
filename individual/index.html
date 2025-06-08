@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新しいタブ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .icon-link {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e5e7eb;
+        }
+        .icon-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .main-button {
+             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .main-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        /* スクロールバーのスタイル */
+        textarea::-webkit-scrollbar, #news-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        textarea::-webkit-scrollbar-track, #news-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        textarea::-webkit-scrollbar-thumb, #news-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .x-link {
+            transition: background-color 0.2s ease-in-out;
+        }
+        .todo-item .delete-btn {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .todo-item:hover .delete-btn {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            
+            <!-- 左カラム -->
+            <div class="lg:col-span-2 space-y-6 md:space-y-8">
+                <!-- 上部ボタン -->
+                <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="https://chatgpt.com/c/6825c92b-26c8-800a-a082-7384c1c658d6" target="_blank" rel="noopener noreferrer" class="main-button bg-white p-6 rounded-2xl shadow-sm flex items-center justify-center text-lg font-semibold text-gray-700 hover:text-blue-600 border border-gray-200">
+                        <span class="mr-3 text-xl">💬</span> ドラえもんプロジェクト ▶
+                    </a>
+                    <a href="https://gemini.google.com/app/c04acee0995567c4" target="_blank" rel="noopener noreferrer" class="main-button bg-white p-6 rounded-2xl shadow-sm flex items-center justify-center text-lg font-semibold text-gray-700 hover:text-blue-600 border border-gray-200">
+                        <span class="mr-3 text-xl">✏️</span> ホーム画面を変更する ▶
+                    </a>
+                </section>
+                
+                <!-- Google App ショートカット -->
+                <section>
+                     <div class="grid grid-cols-6 gap-4">
+                        <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="w-10 h-10">
+                            <span class="text-xs mt-2 font-medium text-gray-600">Gmail</span>
+                        </a>
+                        <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="https://www.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png" alt="Drive" class="w-10 h-10">
+                            <span class="text-xs mt-2 font-medium text-gray-600">Drive</span>
+                        </a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                           <img src="https://s.ytimg.com/yts/img/yt_1200-vflhSIVnY.png" alt="YouTube" class="w-10 h-10 object-contain">
+                            <span class="text-xs mt-2 font-medium text-gray-600">YouTube</span>
+                        </a>
+                         <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                           <img src="https://www.gstatic.com/images/branding/product/2x/calendar_2020q4_48dp.png" alt="Calendar" class="w-10 h-10">
+                            <span class="text-xs mt-2 font-medium text-gray-600">カレンダー</span>
+                        </a>
+                        <a href="https://docs.google.com/document/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                           <img src="https://www.gstatic.com/images/branding/product/2x/docs_2020q4_48dp.png" alt="Docs" class="w-10 h-10">
+                            <span class="text-xs mt-2 font-medium text-gray-600">ドキュメント</span>
+                        </a>
+                        <a href="https://docs.google.com/spreadsheets/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                           <img src="https://www.gstatic.com/images/branding/product/2x/sheets_2020q4_48dp.png" alt="Sheets" class="w-10 h-10">
+                            <span class="text-xs mt-2 font-medium text-gray-600">スプレッドシート</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- AIツール ショートカット -->
+                <section>
+                    <div class="grid grid-cols-4 gap-4">
+                        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="chatgpt-logo.png" alt="ChatGPT" class="w-10 h-10">
+                            <span class="text-sm mt-2 font-medium text-gray-600">ChatGPT</span>
+                        </a>
+                        <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="gemini-logo.png" alt="Gemini" class="w-10 h-10">
+                            <span class="text-sm mt-2 font-medium text-gray-600">Gemini</span>
+                        </a>
+                        <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="claude-logo.png" alt="Claude" class="w-10 h-10">
+                            <span class="text-sm mt-2 font-medium text-gray-600">Claude</span>
+                        </a>
+                        <a href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer" class="icon-link bg-white rounded-2xl p-4 flex flex-col items-center justify-center aspect-square">
+                            <img src="copilot-logo.png" alt="Copilot" class="w-10 h-10">
+                            <span class="text-sm mt-2 font-medium text-gray-600">Copilot</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- 検索フォーム -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                     <form id="google-search-form" class="space-y-2">
+                        <label for="google-search" class="text-sm font-medium text-gray-600">Google検索</label>
+                        <div class="flex">
+                            <input type="search" id="google-search" class="flex-grow p-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-red-500 focus:border-red-500" placeholder="Googleで検索...">
+                            <button type="submit" class="bg-red-600 text-white px-4 rounded-r-md hover:bg-red-700">検索</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- X (Twitter) 検索セクション -->
+                <section>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">🐦 XでAI技術のTipsを探す</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <a href="https://twitter.com/search?q=(%E7%94%9F%E6%88%90AI%20OR%20LLM)%20(tips%20OR%20%E3%81%BE%E3%81%A8%E3%82%81)%20lang%3Aja%20min_faves%3A50%20min_retweets%3A10%20-filter%3Areplies&src=typed_query&f=live" target="_blank" rel="noopener noreferrer" class="x-link block p-3 text-center rounded-lg bg-sky-100 text-sky-800 font-semibold hover:bg-sky-200">Tips・まとめ</a>
+                        <a href="https://twitter.com/search?q=(AI%E6%B4%BB%E7%94%A8%20OR%20%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88)%20lang%3Aja%20min_faves%3A50%20min_retweets%3A10%20-filter%3Areplies&src=typed_query&f=live" target="_blank" rel="noopener noreferrer" class="x-link block p-3 text-center rounded-lg bg-sky-100 text-sky-800 font-semibold hover:bg-sky-200">AI活用・プロンプト</a>
+                        <a href="https://twitter.com/search?q=(%22AI%E4%BE%BF%E5%88%A9%22%20OR%20%22AI%E3%83%84%E3%83%BC%E3%83%AB%22)%20lang%3Aja%20min_faves%3A50%20min_retweets%3A10%20-filter%3Areplies&src=typed_query&f=live" target="_blank" rel="noopener noreferrer" class="x-link block p-3 text-center rounded-lg bg-sky-100 text-sky-800 font-semibold hover:bg-sky-200">便利なAIツール</a>
+                    </div>
+                </section>
+                
+                <!-- ニュースセクション -->
+                <section>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">🧠 AI関連 最新ニュース</h3>
+                    <div id="news-container" class="bg-white p-2 sm:p-4 rounded-xl shadow-sm border border-gray-200 h-96 overflow-y-auto space-y-1">
+                        <p class="text-gray-500 text-center pt-10">ニュースを読み込み中...</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 右カラム -->
+            <div class="space-y-6 md:space-y-8">
+                <!-- メモ帳 -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="font-semibold text-gray-700 mb-2">✍️ 急ぎのメモ (自動保存)</h3>
+                    <textarea id="quick-memo" class="w-full h-48 p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="あとで整理する用のひとことメモなど..."></textarea>
+                    <button id="clear-memo" class="text-xs text-gray-500 hover:text-red-600 mt-2">メモをクリア</button>
+                </section>
+                
+                <!-- ToDoリスト -->
+                <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-6">
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">🗓️ 今日のタスク</h3>
+                        <form id="today-todo-form" class="flex gap-2">
+                            <input type="text" id="today-todo-input" class="flex-grow p-2 border border-gray-300 rounded-md text-sm" placeholder="新しいタスクを追加...">
+                            <button type="submit" class="bg-blue-600 text-white px-4 rounded-md font-semibold text-sm hover:bg-blue-700">+</button>
+                        </form>
+                        <ul id="today-todo-list" class="mt-4 space-y-2"></ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">📅 今週のタスク</h3>
+                         <form id="week-todo-form" class="flex gap-2">
+                            <input type="text" id="week-todo-input" class="flex-grow p-2 border border-gray-300 rounded-md text-sm" placeholder="新しいタスクを追加...">
+                            <button type="submit" class="bg-blue-600 text-white px-4 rounded-md font-semibold text-sm hover:bg-blue-700">+</button>
+                        </form>
+                        <ul id="week-todo-list" class="mt-4 space-y-2"></ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // メモ機能
+            const quickMemo = document.getElementById('quick-memo');
+            const clearMemoBtn = document.getElementById('clear-memo');
+            quickMemo.value = localStorage.getItem('quickMemoText') || '';
+            quickMemo.addEventListener('input', () => {
+                localStorage.setItem('quickMemoText', quickMemo.value);
+            });
+            clearMemoBtn.addEventListener('click', () => {
+                quickMemo.value = '';
+                localStorage.removeItem('quickMemoText');
+            });
+
+            // Google検索フォーム
+            const googleSearchForm = document.getElementById('google-search-form');
+            googleSearchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = document.getElementById('google-search').value;
+                if (query) {
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                }
+            });
+
+            // ニュース読み込み機能
+            async function loadNews() {
+                const newsContainer = document.getElementById('news-container');
+                const keywords = [
+                    '"生成AI"',
+                    '"LLM"',
+                    '"AIエージェント"',
+                    'OpenAI',
+                    'Anthropic',
+                    'Google DeepMind',
+                    'Mistral AI'
+                ];
+                const query = keywords.join(' OR ');
+                const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=ja&gl=JP&ceid=JP:ja`;
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+                    const result = await response.json();
+
+                    if (result.status !== 'ok' || result.items.length === 0) {
+                        newsContainer.innerHTML = '<p class="text-gray-500 text-center pt-10">ニュースが見つかりませんでした。</p>';
+                        return;
+                    }
+
+                    let newsHtml = '';
+                    result.items.forEach((item, index) => {
+                        if (index >= 20) return;
+                        const title = item.title;
+                        const link = item.link;
+                        const pubDate = new Date(item.pubDate);
+                        const source = item.author || 'Google News';
+
+                        newsHtml += `
+                            <a href="${link}" target="_blank" rel="noopener noreferrer" class="block p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                <p class="font-semibold text-sm text-gray-800 leading-tight">${title}</p>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="text-xs text-gray-500">${source}</span>
+                                    <span class="text-xs text-gray-500">${pubDate.toLocaleDateString('ja-JP')}</span>
+                                </div>
+                            </a>
+                        `;
+                    });
+                    newsContainer.innerHTML = newsHtml;
+
+                } catch (error) {
+                    console.error('ニュースの取得に失敗しました:', error);
+                    newsContainer.innerHTML = '<p class="text-red-500 text-center pt-10">ニュースの読み込みに失敗しました。<br>時間をおいて再読み込みしてください。</p>';
+                }
+            }
+            loadNews();
+            
+            // ToDoリスト機能
+            const setupTodo = (listId, inputId, formId, storageKey) => {
+                const todoList = document.getElementById(listId);
+                const todoInput = document.getElementById(inputId);
+                const todoForm = document.getElementById(formId);
+                let tasks = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+                const saveTasks = () => {
+                    localStorage.setItem(storageKey, JSON.stringify(tasks));
+                };
+
+                const renderTasks = () => {
+                    todoList.innerHTML = '';
+                    tasks.forEach(task => {
+                        const li = document.createElement('li');
+                        li.className = 'todo-item flex items-center justify-between text-sm py-1';
+                        li.innerHTML = `
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" class="mr-3 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" ${task.completed ? 'checked' : ''}>
+                                <span class="${task.completed ? 'line-through text-gray-400' : 'text-gray-700'}">${task.text}</span>
+                            </label>
+                            <button class="delete-btn text-red-500 font-bold px-2">&times;</button>
+                        `;
+
+                        li.querySelector('input[type="checkbox"]').addEventListener('change', () => {
+                            task.completed = !task.completed;
+                            saveTasks();
+                            renderTasks();
+                        });
+
+                        li.querySelector('.delete-btn').addEventListener('click', () => {
+                            tasks = tasks.filter(t => t.id !== task.id);
+                            saveTasks();
+                            renderTasks();
+                        });
+                        
+                        todoList.appendChild(li);
+                    });
+                };
+
+                todoForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const text = todoInput.value.trim();
+                    if (text) {
+                        tasks.push({ id: Date.now(), text: text, completed: false });
+                        todoInput.value = '';
+                        saveTasks();
+                        renderTasks();
+                    }
+                });
+
+                renderTasks();
+            };
+
+            setupTodo('today-todo-list', 'today-todo-input', 'today-todo-form', 'todayTasks');
+            setupTodo('week-todo-list', 'week-todo-input', 'week-todo-form', 'weekTasks');
+        });
+    </script>
+</body>
+</html>
